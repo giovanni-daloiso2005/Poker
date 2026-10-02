@@ -1,24 +1,24 @@
 package poker.round;
 
-public class Action {
-    private boolean bet;
-    private boolean check;
-    private boolean fold;
+public sealed interface Action {
+    record Fold() implements Action{}
+    record Check() implements Action{}
+    record Call() implements Action{}
+    record AllIn() implements Action{}
 
-
-    public boolean getBet(){
-        return bet;
+    record Bet(int amount) implements Action{
+        public Bet{
+            if(amount <= 0){
+                throw new IllegalArgumentException("La puntata deve essere maggiore di zero");
+            }
+        }
     }
 
-    public void setBet(boolean bet){
-        this.bet = bet;
-    }
-
-    public boolean getCheck(){
-        return check;
-    }
-
-    public void setCheck(boolean check){
-        this.check = check;
+    record Raise(int amount) implements Action{
+        public Raise{
+            if(amount <= 0){
+                throw new IllegalArgumentException("La puntata deve essere maggiore di zero.");
+            }
+        }
     }
 }
